@@ -136,7 +136,7 @@ def _token_iter(tokens):
 def decode(byteslike, errors='replace', *, ignore_first_line):
     read_code = io.BytesIO(bytes(byteslike)).readline
     if ignore_first_line:
-        read_code()
+        read_code()     # its the encoding comment
 
     tokens = list(tokenize(read_code))
 
