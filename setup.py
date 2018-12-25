@@ -1,7 +1,7 @@
 import dansk
+import os
 import pathlib
 from setuptools import setup, find_packages
-import site
 
 
 # Here's a glorious hack;
@@ -9,7 +9,15 @@ import site
 #   line has been read. site.py runs all .pth files in site-packages if
 #   the first word is import. Yeah.
 #   Stolen from Ned Batchelder
-site_packages = pathlib.Path(site.getusersitepackages())
+def get_site_packages_path():
+    virtualenv = os.environ.get("VIRTUAL_ENV")
+    if virtualenv:
+        from distutils.sysconfig import get_python_lib
+        return get_python_lib()
+    import site
+    return site.getusersitepackages()
+
+site_packages = pathlib.Path(get_site_packages_path())
 # filename starts with zzz because they are run alphabetically and
 # `dansk` has to be on path before it is imported.
 dansk_pth = site_packages / "zzz_register_dansk_encoding.pth"
