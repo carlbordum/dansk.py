@@ -11,6 +11,7 @@
 """
 
 import codecs
+import functools
 import io
 from itertools import islice
 from tokenize import tokenize, untokenize, NAME, OP, TokenInfo
@@ -130,9 +131,13 @@ def _token_iter(tokens):
     yield tokens[-1]
 
 
-def decode(byteslike, errors="strict"):
+# pass True for ignore_first_line if the byteslike still contains the dansk
+# encoding comment
+def decode(byteslike, errors='replace', *, ignore_first_line):
     read_code = io.BytesIO(bytes(byteslike)).readline
-    read_code()  # discard first line, its the encoding comment
+    if ignore_first_line:
+        read_code()
+
     tokens = list(tokenize(read_code))
 
     new_tokens = []
@@ -153,5 +158,23 @@ def decode(byteslike, errors="strict"):
     return str(untokenize(new_tokens), "utf-8"), len(byteslike)
 
 
-codec_info = codecs.CodecInfo(encode, decode, name="dansk")
+# codecs.BufferedIncrementalDecoder is undocumented, but well commented, and if
+# it breaks, it's easy to copy/paste it here
+class DanskIncrementalDecoder(codecs.BufferedIncrementalDecoder):
+
+    def _buffer_decode(self, data, errors, final):
+        if final:
+            # this thing is used when python has already removed the encoding
+            # comment, so tell our decode() to not do it
+            return decode(data, errors, ignore_first_line=False)
+        else:
+            return ('', 0)
+
+
+codec_info = codecs.CodecInfo(
+    encode,
+    functools.partial(decode, ignore_first_line=True),
+    incrementaldecoder=DanskIncrementalDecoder,
+    name="dansk",
+)
 codecs.register({"dansk": codec_info}.get)
