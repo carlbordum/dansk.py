@@ -133,10 +133,10 @@ def _token_iter(tokens):
 
 # pass True for ignore_first_line if the byteslike still contains the dansk
 # encoding comment
-def decode(byteslike, errors='replace', *, ignore_first_line):
+def decode(byteslike, errors="replace", *, ignore_first_line):
     read_code = io.BytesIO(bytes(byteslike)).readline
     if ignore_first_line:
-        read_code()     # its the encoding comment
+        read_code()  # its the encoding comment
 
     tokens = list(tokenize(read_code))
 
@@ -161,14 +161,13 @@ def decode(byteslike, errors='replace', *, ignore_first_line):
 # codecs.BufferedIncrementalDecoder is undocumented, but well commented, and if
 # it breaks, it's easy to copy/paste it here
 class DanskIncrementalDecoder(codecs.BufferedIncrementalDecoder):
-
     def _buffer_decode(self, data, errors, final):
         if final:
             # this thing is used when python has already removed the encoding
             # comment, so tell our decode() to not do it
             return decode(data, errors, ignore_first_line=False)
         else:
-            return ('', 0)
+            return ("", 0)
 
 
 codec_info = codecs.CodecInfo(
