@@ -1,0 +1,7 @@
+import dansk
+# Lines beginning with import are executed by site.py
+# Furthermore, they are executed alphabetically, hence the "zzz" prefix
+#   so dansk.py is on path before we attempt to import it.
+# These shenanigans are needed because dansk.py has to be imported
+#   before our beautiful ``# coding=dansk`` programs are run, so the
+#   encoding can be found.
