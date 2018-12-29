@@ -10,14 +10,18 @@
     and Robert Jensen.
 """
 
+import argparse
 import codecs
 import functools
 import io
 from itertools import islice
+import os
+import pathlib
+import sys
 from tokenize import tokenize, untokenize, NAME, OP, TokenInfo
 
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 
 _viking_to_english = {
@@ -177,3 +181,63 @@ codec_info = codecs.CodecInfo(
     name="dansk",
 )
 codecs.register({"dansk": codec_info}.get)
+
+
+def finish_installation():
+    """Place a .pth file in site-packages that loads dansk.py.
+
+    site.py executes *.pth files in site-packages when Python starts.
+    We need this because dansk.py has to be imported before our
+    beautiful ``# coding=dansk`` programs are run, so the decoder can
+    be found.
+    """
+
+    def get_site_packages_path():
+        virtualenv = os.environ.get("VIRTUAL_ENV")
+        if virtualenv:
+            from distutils.sysconfig import get_python_lib
+            return get_python_lib()
+        import site
+        return site.getusersitepackages()
+
+    site_packages = pathlib.Path(get_site_packages_path())
+    # prefixed with zzz, because they are executed alphabetically and
+    # dansk.py has to be on path before it can be imported
+    dansk_pth = site_packages / "zzz_register_dansk_encoding.pth"
+    with open(dansk_pth, "w+") as f:
+        f.write("import dansk")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog="dansk",
+        description="Python, men dansk.",
+        formatter_class=argparse.RawTextHelpFormatter,
+        add_help=False,
+    )
+    parser.add_argument(
+        "installér",
+        nargs=argparse.REMAINDER,
+        help="dansk.py indlæses når Python startes.",
+    )
+    parser.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        version=__version__,
+        help="skriv version information og stop.",
+    )
+    parser.add_argument(
+        "-h", "--hjælp", action="help", help="vis denne besked og stop."
+    )
+    args = parser.parse_args()
+
+    if len(args.installér):
+        finish_installation()
+    else:
+        print("dansk: mangler kommando\nPrøv 'dansk --hjælp' for mere information.")
+        sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()

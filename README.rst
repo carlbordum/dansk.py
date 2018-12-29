@@ -10,6 +10,7 @@ Installering
 For at installere ``dansk.py``, skal du køre: ::
 
     $ pip install dansk
+    $ python -m dansk installér
 
 
 Anvendelse

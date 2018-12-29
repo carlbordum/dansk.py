@@ -1,16 +1,6 @@
 import dansk
-import os
 import pathlib
-from setuptools import setup, find_packages
-
-
-def get_site_packages_path():
-    virtualenv = os.environ.get("VIRTUAL_ENV")
-    if virtualenv:
-        from distutils.sysconfig import get_python_lib
-        return get_python_lib()
-    import site
-    return site.getusersitepackages()
+from setuptools import setup
 
 
 this_dir = pathlib.Path(__file__).parent.absolute()
@@ -29,5 +19,4 @@ setup(
     long_description=long_description,
     platforms="any",
     py_modules=["dansk"],
-    data_files=[(get_site_packages_path(), ["zzz_register_dansk_encoding.pth"])],
 )
