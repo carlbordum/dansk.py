@@ -17,7 +17,7 @@ from itertools import islice
 from tokenize import tokenize, untokenize, NAME, OP, TokenInfo
 
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 
 _viking_to_english = {
