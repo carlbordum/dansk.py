@@ -35,11 +35,11 @@ Dansk           | Original
 `fortsæt`       | `continue`
 `lad`           | `def`
 `slet`          | `del`
-`ellers`-hvis   | `elif`
+`ellers-hvis`   | `elif`
 `ellers`        | `else`
 `pånær`         | `except`
 `slutteligt`    | `finally`
-`for`-hver      | `for`
+`for-hver`      | `for`
 `fra`           | `from`
 `altomfattende` | `global`
 `hvis`          | `if`
