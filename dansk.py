@@ -42,11 +42,13 @@ _viking_to_english = {
     "fortsæt": "continue",
     "lad": "def",
     "slet": "del",
-    "ellers-hvis": "elif",
+    # `ellers-hvis` duer ikke, fordi ingen andre keywords indeholder `-`
+    "elhvis": "elif",
     "ellers": "else",
     "pånær": "except",
     "slutteligt": "finally",
-    "for-hver": "for",
+    # `for-hvis` duer ikke, fordi ingen andre keywords indeholder `-`
+    "for": "for",
     "fra": "from",
     "altomfattende": "global",
     "hvis": "if",
@@ -61,7 +63,8 @@ _viking_to_english = {
     "hejs": "raise",
     "aflever": "return",
     "forsøg": "try",
-    "medens": "while",
+    # `medens` blev foreslået først, men `mens` er mere naturligt
+    "mens": "while",
     "brug": "with",
     # Den her var virkelig svær. Der var mange gode bud, men i sidste
     # ende må vi konstatere at `yd` er bedst, så længe man lytter til
