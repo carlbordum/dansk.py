@@ -86,7 +86,7 @@ def encode(string, errors="strict"):
 def _token_iter(tokens):
     """Collapse tokens considered a single token in danish into one.
 
-    We need this function, because the tokenizer considers `ellers-hvis`
+    We need this function, because the tokenizer considers `elhvis`
     and `for-hver` as "ellers" MINUS "hvis" and "for" MINUS "hver"
     respectively.
 
@@ -123,7 +123,7 @@ def _token_iter(tokens):
             continue
 
         if _is_elif_token(t1, t2, t3):
-            yield TokenInfo(NAME, "ellers-hvis", t1.start, t1.end, t1.line)
+            yield TokenInfo(NAME, "elhvis", t1.start, t1.end, t1.line)
             skip = 2
         elif _is_for_token(t1, t2, t3):
             yield TokenInfo(NAME, "for-hver", t1.start, t1.end, t1.line)
