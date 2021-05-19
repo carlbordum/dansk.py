@@ -9,15 +9,15 @@ lad frostboks():
         hvis i er 5 * 7:
             yd "fumbumsum"
 
-        ellers-hvis (i % 5 er 0 eller
+        elhvis (i % 5 er 0 eller
                      '5' indeni str(i)):
             yd "fum"
 
-        ellers-hvis (i % 7 er 0 eller
+        elhvis (i % 7 er 0 eller
                      '7' indeni str(i)):
             yd "bum"
 
-        ellers-hvis i == 5 + 7:
+        elhvis i == 5 + 7:
             yd "fumbumsum"
 
         ellers:

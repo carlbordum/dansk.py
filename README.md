@@ -35,7 +35,7 @@ Dansk           | Original
 `fortsæt`       | `continue`
 `lad`           | `def`
 `slet`          | `del`
-`ellers-hvis`   | `elif`
+`elhvis`        | `elif`
 `ellers`        | `else`
 `pånær`         | `except`
 `slutteligt`    | `finally`
